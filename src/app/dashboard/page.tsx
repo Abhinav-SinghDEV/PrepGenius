@@ -4,15 +4,15 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 
 export default function DashboardPage() {
-  const handleLogout = async () => {
-    // 1. Clear frontend memory
+  const handleLogout = () => {
+    // 1. Nuke local storage
     localStorage.clear();
     
-    // 2. Assassinate any ghost custom tokens lying around in the browser
+    // 2. Assassinate the ghost custom token
     document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
     
-    // 3. Use NextAuth to properly destroy the secure Google cookie and redirect
-    await signOut({ callbackUrl: '/register' });
+    // 3. Force the browser to hit NextAuth's built-in server logout directly
+    window.location.href = "/api/auth/signout?callbackUrl=/register";
   };
 
   return (
