@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import SessionGate from "@/components/SessionGate";
 
 export const metadata: Metadata = {
   title: "PrepGenius",
@@ -13,7 +14,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <SessionGate>
+          {children}
+        </SessionGate>
+      </body>
     </html>
   );
 }

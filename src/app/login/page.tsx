@@ -31,6 +31,7 @@ export default function LoginPage() {
     const data = await response.json();
 
     if (data.success) {
+      sessionStorage.setItem("pg_auth", "1");
       router.push("/dashboard");
     } else {
       alert(data.message || "Login Failed");
@@ -49,15 +50,17 @@ export default function LoginPage() {
           </div>
         </div>
 
-        <h1 className="text-4xl font-bold text-center mb-2">
-          Welcome Back
-        </h1>
+        <h1 className="text-4xl font-bold text-center mb-2">Welcome Back</h1>
 
         <p className="text-gray-400 text-center mb-8">
           Login to continue your AI interview journey
         </p>
 
-        <form onSubmit={handleLogin} autoComplete="off" className="flex flex-col gap-5">
+        <form
+          onSubmit={handleLogin}
+          autoComplete="off"
+          className="flex flex-col gap-5"
+        >
           <input
             type="email"
             name="login-email"
@@ -88,7 +91,10 @@ export default function LoginPage() {
 
         <p className="text-center text-gray-400 mt-6">
           Don&apos;t have an account?{" "}
-          <Link href="/register" className="text-white font-semibold hover:text-blue-400">
+          <Link
+            href="/register"
+            className="text-white font-semibold hover:text-blue-400"
+          >
             Register
           </Link>
         </p>

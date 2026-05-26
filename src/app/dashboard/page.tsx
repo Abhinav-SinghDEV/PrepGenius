@@ -3,13 +3,16 @@
 import Link from "next/link";
 
 export default function DashboardPage() {
-  const handleLogout = () => {
-    // 1. Clear frontend memory
-    localStorage.clear();
-    
-    // 2. Force the browser to hit our new unstoppable server route
-    window.location.href = "/api/logout";
-  };
+const handleLogout = () => {
+  // Clear frontend memory
+  localStorage.clear();
+
+  // Clear session login flag
+  sessionStorage.removeItem("pg_auth");
+
+  // Force server logout route
+  window.location.href = "/api/logout";
+};
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
