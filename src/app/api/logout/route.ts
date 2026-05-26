@@ -1,18 +1,14 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
-  // 1. Create a successful JSON response (Do NOT use a redirect here)
-  const response = NextResponse.json({
-    success: true,
-    message: "Successfully logged out",
-  });
+export async function GET(request: NextRequest) {
+  // 1. Tell the server exactly where to send you after clearing cookies
+  const response = NextResponse.redirect(new URL("/register", request.url));
 
-  // 2. Destroy the "token" cookie by setting its expiration date to the past
-  response.cookies.set("token", "", {
-    httpOnly: true,
-    expires: new Date(0),
-    path: "/",
-  });
+  // 2. Aggressively destroy every possible NextAuth and custom cookie
+  response.cookies.set("next-auth.session-token", "", { maxAge: 0, path: "/" });
+  response.cookies.set("__Secure-next-auth.session-token", "", { maxAge: 0, path: "/" });
+  response.cookies.set("token", "", { maxAge: 0, path: "/" });
 
+  // 3. Execute the redirect
   return response;
 }

@@ -1,18 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { signOut } from "next-auth/react";
 
 export default function DashboardPage() {
-  const handleLogout = async () => {
-    // 1. Nuke local storage
+  const handleLogout = () => {
+    // 1. Clear frontend memory
     localStorage.clear();
     
-    // 2. Assassinate the ghost custom token
-    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-    
-    // 3. Silent NextAuth logout (This completely skips the black confirmation screen!)
-    await signOut({ callbackUrl: '/register', redirect: true });
+    // 2. Force the browser to hit our new unstoppable server route
+    window.location.href = "/api/logout";
   };
 
   return (
