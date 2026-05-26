@@ -2,10 +2,10 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
   const response = NextResponse.redirect(
-    new URL("/register", request.url)
+    new URL("/login", request.url)
   );
 
-  // Clear NextAuth cookies
+  // Clear NextAuth session cookies
   response.cookies.set("next-auth.session-token", "", {
     path: "/",
     expires: new Date(0),
@@ -28,8 +28,14 @@ export async function GET(request: NextRequest) {
     secure: true,
   });
 
-  // Clear custom token if you use one
+  // Clear custom token
   response.cookies.set("token", "", {
+    path: "/",
+    expires: new Date(0),
+  });
+
+  // Clear middleware auth cookie
+  response.cookies.set("pg_auth", "", {
     path: "/",
     expires: new Date(0),
   });

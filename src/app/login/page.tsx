@@ -29,13 +29,12 @@ export default function LoginPage() {
     });
 
     const data = await response.json();
-
-    if (data.success) {
-      sessionStorage.setItem("pg_auth", "1");
-      router.push("/dashboard");
-    } else {
-      alert(data.message || "Login Failed");
-    }
+if (data.success) {
+  document.cookie = "pg_auth=1; path=/; SameSite=Lax";
+  router.replace("/dashboard");
+} else {
+  alert(data.message || "Login Failed");
+}
   };
 
   return (

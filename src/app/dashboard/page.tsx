@@ -1,43 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
-  const router = useRouter();
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    const auth = sessionStorage.getItem("pg_auth");
-
-    if (!auth) {
-      router.replace("/login");
-      return;
-    }
-
-    setReady(true);
-  }, [router]);
-
   const handleLogout = () => {
-    // Clear frontend memory
     localStorage.clear();
-    sessionStorage.removeItem("pg_auth");
-
-    // Force server logout route
     window.location.href = "/api/logout";
   };
-
-  if (!ready) {
-    return (
-      <div className="min-h-screen bg-black text-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
-          <p className="text-gray-300">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -84,13 +53,16 @@ export default function DashboardPage() {
                   Genius+
                 </span>
               </div>
+
               <h2 className="text-3xl font-bold text-blue-400 mb-4">
                 AI-Powered Mock Interview
               </h2>
+
               <p className="text-gray-300 leading-7 mb-8">
                 Experience role-specific AI interviews with intelligent feedback
                 and performance analysis.
               </p>
+
               <ul className="space-y-3 text-gray-200">
                 <li className="flex items-center gap-3">
                   <span className="text-blue-400">•</span> Dynamic Role Specific
@@ -112,13 +84,16 @@ export default function DashboardPage() {
               className="block bg-[#0b1220] border border-blue-500/20 rounded-3xl p-8 shadow-2xl hover:scale-[1.01] transition-all duration-300"
             >
               <div className="text-4xl mb-8">📊</div>
+
               <h2 className="text-3xl font-bold text-blue-400 mb-4">
                 PrepGenius Career Tools
               </h2>
+
               <p className="text-gray-300 leading-7 mb-8">
                 Smart career tools powered by AI to improve resumes, interview
                 preparation, and career growth.
               </p>
+
               <ul className="space-y-3 text-gray-200">
                 <li className="flex items-center gap-3">
                   <span className="text-blue-400">•</span> Market Intelligence Hub
