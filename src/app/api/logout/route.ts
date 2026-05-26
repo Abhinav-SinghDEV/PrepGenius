@@ -1,14 +1,38 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
-  // 1. Tell the server exactly where to send you after clearing cookies
-  const response = NextResponse.redirect(new URL("/register", request.url));
+  const response = NextResponse.redirect(
+    new URL("/register", request.url)
+  );
 
-  // 2. Aggressively destroy every possible NextAuth and custom cookie
-  response.cookies.set("next-auth.session-token", "", { maxAge: 0, path: "/" });
-  response.cookies.set("__Secure-next-auth.session-token", "", { maxAge: 0, path: "/" });
-  response.cookies.set("token", "", { maxAge: 0, path: "/" });
+  // Clear NextAuth cookies
+  response.cookies.set("next-auth.session-token", "", {
+    path: "/",
+    expires: new Date(0),
+  });
 
-  // 3. Execute the redirect
+  response.cookies.set("__Secure-next-auth.session-token", "", {
+    path: "/",
+    expires: new Date(0),
+    secure: true,
+  });
+
+  response.cookies.set("next-auth.csrf-token", "", {
+    path: "/",
+    expires: new Date(0),
+  });
+
+  response.cookies.set("__Host-next-auth.csrf-token", "", {
+    path: "/",
+    expires: new Date(0),
+    secure: true,
+  });
+
+  // Clear custom token if you use one
+  response.cookies.set("token", "", {
+    path: "/",
+    expires: new Date(0),
+  });
+
   return response;
 }
