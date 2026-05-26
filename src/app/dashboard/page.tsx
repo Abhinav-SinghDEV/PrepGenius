@@ -1,12 +1,25 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 export default function DashboardPage() {
+  const [isReady, setIsReady] = useState(false);
+
+  // This ensures the dashboard doesn't render until the component is fully mounted
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
+
   const handleLogout = () => {
+    // Clear local data
     localStorage.clear();
+    // Redirect to your custom server-side logout route
     window.location.href = "/api/logout";
   };
+
+  // Prevent "stuck" loading by rendering nothing until mounted
+  if (!isReady) return null;
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -21,7 +34,6 @@ export default function DashboardPage() {
           <div className="px-4 py-2 rounded-full bg-black border border-white/10 text-lg font-bold shadow-lg">
             <span className="text-blue-400">Prep</span>Genius
           </div>
-
           <button
             onClick={handleLogout}
             className="bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white transition-all duration-300 px-5 py-2 rounded-xl font-semibold border border-red-500/20"
@@ -53,28 +65,14 @@ export default function DashboardPage() {
                   Genius+
                 </span>
               </div>
-
-              <h2 className="text-3xl font-bold text-blue-400 mb-4">
-                AI-Powered Mock Interview
-              </h2>
-
+              <h2 className="text-3xl font-bold text-blue-400 mb-4">AI-Powered Mock Interview</h2>
               <p className="text-gray-300 leading-7 mb-8">
-                Experience role-specific AI interviews with intelligent feedback
-                and performance analysis.
+                Experience role-specific AI interviews with intelligent feedback and performance analysis.
               </p>
-
               <ul className="space-y-3 text-gray-200">
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> Dynamic Role Specific
-                  Questions
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> AI Feedback Report
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> Technical Performance
-                  Analysis
-                </li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> Dynamic Role Specific Questions</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> AI Feedback Report</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> Technical Performance Analysis</li>
               </ul>
             </Link>
 
@@ -84,31 +82,15 @@ export default function DashboardPage() {
               className="block bg-[#0b1220] border border-blue-500/20 rounded-3xl p-8 shadow-2xl hover:scale-[1.01] transition-all duration-300"
             >
               <div className="text-4xl mb-8">📊</div>
-
-              <h2 className="text-3xl font-bold text-blue-400 mb-4">
-                PrepGenius Career Tools
-              </h2>
-
+              <h2 className="text-3xl font-bold text-blue-400 mb-4">PrepGenius Career Tools</h2>
               <p className="text-gray-300 leading-7 mb-8">
-                Smart career tools powered by AI to improve resumes, interview
-                preparation, and career growth.
+                Smart career tools powered by AI to improve resumes, interview preparation, and career growth.
               </p>
-
               <ul className="space-y-3 text-gray-200">
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> Market Intelligence Hub
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> AI Career ChatBot
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> MCQ Mock Interview
-                  Practice
-                </li>
-                <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> AI Career Roadmap
-                  Generator
-                </li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> Market Intelligence Hub</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> AI Career ChatBot</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> MCQ Mock Interview Practice</li>
+                <li className="flex items-center gap-3"><span className="text-blue-400">•</span> AI Career Roadmap Generator</li>
               </ul>
             </Link>
           </section>
