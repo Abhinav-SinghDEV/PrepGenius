@@ -42,7 +42,7 @@ const tools = [
 
 export default function CareerToolsPage() {
   return (
-    <div className="min-h-screen bg-black text-white relative overflow-hidden lg:h-screen lg:overflow-hidden">
+    <div className="min-h-screen bg-black text-white relative overflow-x-hidden pb-10">
       {/* Background Glow */}
       <div className="absolute w-[420px] h-[420px] bg-blue-600 opacity-10 blur-[140px] rounded-full left-[-120px] top-[80px]" />
       <div className="absolute w-[320px] h-[320px] bg-purple-600 opacity-10 blur-[120px] rounded-full right-[-120px] top-[220px]" />
@@ -87,7 +87,6 @@ export default function CareerToolsPage() {
           {tools.map((tool) => (
             <div
               key={tool.title}
-              // Changed bg-[#07122b] to bg-[#0a0a0a] below for the true dark mode look
               className="bg-[#0a0a0a] border border-blue-500/20 rounded-3xl p-5 sm:p-6 lg:p-7 shadow-2xl shadow-blue-950/20 hover:border-cyan-400/30 transition-all duration-300 h-full min-h-[220px] lg:min-h-[235px] flex flex-col"
             >
               <div className="text-3xl sm:text-4xl mb-4 sm:mb-5">
