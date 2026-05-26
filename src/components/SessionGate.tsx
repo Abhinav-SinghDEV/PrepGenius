@@ -2,43 +2,36 @@
 
 import { useEffect, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
-import { signOut } from "next-auth/react";
-
-const PUBLIC_ROUTES = ["/login", "/register", "/api/auth"];
 
 export default function SessionGate({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const pathname = usePathname();
   const router = useRouter();
-  const [ready, setReady] = useState(false);
+  const pathname = usePathname();
+
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-    const isPublicRoute = PUBLIC_ROUTES.some((route) =>
-      pathname.startsWith(route)
-    );
+    const isLoggedIn = sessionStorage.getItem("pg_auth");
 
-    if (isPublicRoute) {
-      setReady(true);
-      return;
+    // Public routes
+    const publicRoutes = ["/login", "/register"];
+
+    if (!isLoggedIn && !publicRoutes.includes(pathname)) {
+      router.replace("/login");
+    } else {
+      setChecking(false);
     }
-
-    const active = sessionStorage.getItem("pg_auth") === "1";
-
-    if (!active) {
-      signOut({ redirect: false }).finally(() => {
-        router.replace("/login");
-      });
-      return;
-    }
-
-    setReady(true);
   }, [pathname, router]);
 
-  if (!ready && !PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
-    return <div className="min-h-screen bg-black" />;
+  if (checking) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center text-white">
+        Loading...
+      </div>
+    );
   }
 
   return <>{children}</>;

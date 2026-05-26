@@ -1,18 +1,43 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function DashboardPage() {
-const handleLogout = () => {
-  // Clear frontend memory
-  localStorage.clear();
+  const router = useRouter();
+  const [ready, setReady] = useState(false);
 
-  // Clear session login flag
-  sessionStorage.removeItem("pg_auth");
+  useEffect(() => {
+    const auth = sessionStorage.getItem("pg_auth");
 
-  // Force server logout route
-  window.location.href = "/api/logout";
-};
+    if (!auth) {
+      router.replace("/login");
+      return;
+    }
+
+    setReady(true);
+  }, [router]);
+
+  const handleLogout = () => {
+    // Clear frontend memory
+    localStorage.clear();
+    sessionStorage.removeItem("pg_auth");
+
+    // Force server logout route
+    window.location.href = "/api/logout";
+  };
+
+  if (!ready) {
+    return (
+      <div className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-12 h-12 border-4 border-blue-500 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+          <p className="text-gray-300">Loading dashboard...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-black text-white relative overflow-hidden">
@@ -27,6 +52,7 @@ const handleLogout = () => {
           <div className="px-4 py-2 rounded-full bg-black border border-white/10 text-lg font-bold shadow-lg">
             <span className="text-blue-400">Prep</span>Genius
           </div>
+
           <button
             onClick={handleLogout}
             className="bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white transition-all duration-300 px-5 py-2 rounded-xl font-semibold border border-red-500/20"
@@ -62,18 +88,20 @@ const handleLogout = () => {
                 AI-Powered Mock Interview
               </h2>
               <p className="text-gray-300 leading-7 mb-8">
-                Experience role-specific AI interviews with intelligent
-                feedback and performance analysis.
+                Experience role-specific AI interviews with intelligent feedback
+                and performance analysis.
               </p>
               <ul className="space-y-3 text-gray-200">
                 <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> Dynamic Role Specific Questions
+                  <span className="text-blue-400">•</span> Dynamic Role Specific
+                  Questions
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="text-blue-400">•</span> AI Feedback Report
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> Technical Performance Analysis
+                  <span className="text-blue-400">•</span> Technical Performance
+                  Analysis
                 </li>
               </ul>
             </Link>
@@ -88,8 +116,8 @@ const handleLogout = () => {
                 PrepGenius Career Tools
               </h2>
               <p className="text-gray-300 leading-7 mb-8">
-                Smart career tools powered by AI to improve resumes,
-                interview preparation, and career growth.
+                Smart career tools powered by AI to improve resumes, interview
+                preparation, and career growth.
               </p>
               <ul className="space-y-3 text-gray-200">
                 <li className="flex items-center gap-3">
@@ -99,10 +127,12 @@ const handleLogout = () => {
                   <span className="text-blue-400">•</span> AI Career ChatBot
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> MCQ Mock Interview Practice
+                  <span className="text-blue-400">•</span> MCQ Mock Interview
+                  Practice
                 </li>
                 <li className="flex items-center gap-3">
-                  <span className="text-blue-400">•</span> AI Career Roadmap Generator
+                  <span className="text-blue-400">•</span> AI Career Roadmap
+                  Generator
                 </li>
               </ul>
             </Link>
