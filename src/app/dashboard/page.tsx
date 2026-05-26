@@ -8,7 +8,10 @@ export default function DashboardPage() {
     // 1. Clear frontend memory
     localStorage.clear();
     
-    // 2. Use NextAuth to properly destroy the secure cookie and redirect to register
+    // 2. Assassinate any ghost custom tokens lying around in the browser
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    
+    // 3. Use NextAuth to properly destroy the secure Google cookie and redirect
     await signOut({ callbackUrl: '/register' });
   };
 
