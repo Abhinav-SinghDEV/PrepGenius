@@ -1,17 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { signOut } from "next-auth/react";
 
 export default function DashboardPage() {
   const handleLogout = async () => {
-    // 1. Hit the API route to destroy the secure cookie
-    await fetch("/api/logout");
-    
-    // 2. Clear frontend memory (user name, history, etc.)
+    // 1. Clear frontend memory
     localStorage.clear();
     
-    // 3. Force a hard redirect to the login page so Next.js resets its cache
-    window.location.href = "/login";
+    // 2. Use NextAuth to properly destroy the secure cookie and redirect to register
+    await signOut({ callbackUrl: '/register' });
   };
 
   return (
