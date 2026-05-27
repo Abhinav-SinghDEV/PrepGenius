@@ -52,7 +52,6 @@ export async function POST(req: Request) {
       );
     }
 
-    //  DYNAMIC THEME INJECTION: Forces the AI to write puzzles in a completely new setting every time
     const themes = ["Space Exploration", "Medieval Kingdom", "Cyberpunk Future", "Deep Sea Submarine", "Jungle Expedition", "Corporate Tech Startup", "Time Travel Agency", "Mars Colony", "Arctic Research Lab", "Magical Academy"];
     const randomTheme = themes[Math.floor(Math.random() * themes.length)];
     const randomSeed = Math.random().toString(36).substring(2, 15) + Date.now();
